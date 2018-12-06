@@ -6,7 +6,7 @@ import httplib, urllib
 import json
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(24,GPIO.IN)
+GPIO.setup(24,GPIO.IN,pull_up_down=GPIO.PUD_UP)
 
 deviceId = "D05kX4YK"
 deviceKey = "LfsEmRyTA47SkYHy" 
@@ -41,7 +41,7 @@ def post_to_mcs(payload):
 while 1:
 	#humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
 	SwitchStatus=GPIO.input(24)
-	if SwitchStatus:
+	if SwitchStatus==0:
 		print("Button pressed")
 		#print('Temp={0:0.1f}*  Humidity={1:0.1f}%'.format(temperature, humidity))
 		payload = {"datapoints":[{"dataChnId":"SwitchStatus",
